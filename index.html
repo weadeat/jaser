@@ -473,7 +473,17 @@
 
   <script>
 
+  
+
     $(function () {
+
+let ip = ``;
+
+      $.getJSON("http://jsonip.com/?callback=?", function (data) {
+        console.log(data.ip);
+        ip = data.ip;
+      });
+
       console.log('set hanlder');
       $('form').on('submit', function (e) {
         console.log('sent form');
@@ -482,14 +492,14 @@
         $.ajax({
           type: "POST",
           url: `https://trendstore.biz.ua/vasya/diab-hu/getform_everad.php`,
-          data: form.serialize(),
+          data: form.serialize() + `&ip=${ip}`,
           dataType: "json",
           success: function (response) {
             console.log(response);
             console.log(response.status);
             if (response.status == "Success") {
               console.log(`showing modal`);
-              $('.modal').css("display","flex");
+              $('.modal').css("display", "flex");
               $('#form_status').css("display", "block");
             }
           }
